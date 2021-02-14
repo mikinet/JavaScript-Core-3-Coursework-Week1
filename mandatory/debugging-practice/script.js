@@ -113,12 +113,12 @@ function reset() {
   check.checked = false;
 }
 
-// a function to check if the book about to be added to library doesn't exist in the library
+// check if the book about to be added does exist in the library
 function isNew(book) {
   const exists = myLibrary.find((item) => {
+    // assume a book's title and the author's name are enough criteria to determine a match
     return item.title === book.title && item.author === book.author;
   });
-  console.log(exists);
   if (exists) {
     return false;
   }
