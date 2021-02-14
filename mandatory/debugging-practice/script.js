@@ -33,8 +33,16 @@ function submit() {
     return false;
   } else {
     let book = new Book(title.value, author.value, pages.value, check.checked);
-    myLibrary.push(book);
-    render();
+    // prevent duplicate listing of an already existing book in the library
+    if (isNew(book)) {
+      myLibrary.push(book);
+      render();
+      reset();
+    } else {
+      alert("Cannot add this book. It already exists in your library!");
+      reset();
+      return false;
+    }
   }
 }
 
@@ -97,3 +105,22 @@ function render() {
   }
 }
 
+// reset fields ones a book is added to library
+function reset() {
+  title.value = "";
+  author.value = "";
+  pages.value = "";
+  check.checked = false;
+}
+
+// a function to check if the book about to be added to library doesn't exist in the library
+function isNew(book) {
+  const exists = myLibrary.find((item) => {
+    return item.title === book.title && item.author === book.author;
+  });
+  console.log(exists);
+  if (exists) {
+    return false;
+  }
+  return true;
+}
